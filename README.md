@@ -191,50 +191,81 @@ Route::middleware(['auth'])->group(function () {
 Create `resources/views/todos/index.blade.php`:
 
 ```blade
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            📝 My Todo List
+        </h2>
+    </x-slot>
 
-@section('content')
-<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
-    <h1 class="text-2xl font-bold mb-4">📝 My Todo List</h1>
-
-    <form method="POST" action="{{ route('todos.store') }}" class="mb-4 flex">
-        @csrf
-        <input name="title" placeholder="New task..."
-               class="flex-grow border rounded-l px-3 py-2 focus:outline-none" />
-        <button class="bg-blue-500 text-white px-4 rounded-r">Add</button>
-    </form>
-
-    <ul>
-        @foreach($todos as $todo)
-            <li class="flex justify-between items-center mb-2 {{ $todo->completed ? 'line-through text-gray-500' : '' }}">
-                <form method="POST" action="{{ route('todos.update', $todo) }}">
+    <div class="py-6">
+        <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <form method="POST" action="{{ route('todos.store') }}" class="flex mb-4">
                     @csrf
-                    @method('PATCH')
-                    <button class="text-left" title="Toggle complete">{{ $todo->title }}</button>
+                    <input name="title" placeholder="New task..."
+                           class="flex-grow border rounded-l px-3 py-2 focus:outline-none" />
+                    <button class="bg-blue-500 text-white px-4 rounded-r">Add</button>
                 </form>
 
-                <form method="POST" action="{{ route('todos.destroy', $todo) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button class="text-red-500">✖</button>
-                </form>
-            </li>
-        @endforeach
-    </ul>
-</div>
-@endsection
+                <ul>
+                    @foreach($todos as $todo)
+                        <li class="flex justify-between items-center mb-2 {{ $todo->completed ? 'line-through text-gray-500' : '' }}">
+                            <form method="POST" action="{{ route('todos.update', $todo) }}">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="text-left" title="Toggle complete">
+                                    {{ $todo->title }}
+                                </button>
+                            </form>
+
+                            <form method="POST" action="{{ route('todos.destroy', $todo) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500">✖</button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
 ```
 
 ---
 
-### 7.7) Test
+### 7.7) Add Todos link to the main navigation
+
+Open `resources/views/livewire/layout/navigation.blade.php` and locate the Dashboard link:
+
+```blade
+<x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+    {{ __('Dashboard') }}
+</x-nav-link>
+```
+
+Add the Todos link right below it:
+
+```blade
+<x-nav-link :href="route('todos.index')" :active="request()->routeIs('todos.*')">
+    📝 {{ __('Todos') }}
+</x-nav-link>
+```
+
+Now the "Todos" link will appear in the top navigation bar next to Dashboard.
+
+---
+
+### 7.8) Test
 
 Open `/todos` (Codespaces → Port 80 → **Open in Browser**).
 
 ✅ You can now:
 - Add tasks  
 - Mark them as done (click title)  
-- Delete tasks  
+- Delete tasks
+- Access them directly from the main navigation 
 
 ---
 
