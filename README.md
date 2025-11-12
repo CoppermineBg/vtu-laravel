@@ -77,7 +77,7 @@ This scaffolds `/login`, `/register`, and `/profile`.
 
 ---
 
-## 7️⃣ Add a mini Todo 📝 module
+## 7️⃣ (Optional) Add a mini Todo 📝 module
 
 ### 7.1) Create model, migration and controller
 
