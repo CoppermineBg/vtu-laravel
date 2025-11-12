@@ -62,7 +62,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
 ---
 
-## 6️⃣ (Optional) Add authentication with Breeze (Livewire)
+## 6️⃣ Add authentication with Breeze (Livewire)
 
 ```bash
 ./vendor/bin/sail composer require laravel/breeze --dev
@@ -73,23 +73,6 @@ return Application::configure(basePath: dirname(__DIR__))
 ```
 
 This scaffolds `/login`, `/register`, and `/profile`.
-
----
-
-## 7️⃣ Build assets, run migrations, test
-
-```bash
-./vendor/bin/sail up -d
-./vendor/bin/sail artisan migrate
-./vendor/bin/sail npm run build
-```
-
-Open **Ports → Port 80 → “Open in Browser.”**
-
-✅ You should see:
-- Working `/register` and `/login` links  
-- Correct Codespace domain  
-- CSS/JS assets loading properly  
 
 ---
 
