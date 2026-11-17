@@ -15,6 +15,7 @@
 ```bash
 composer create-project laravel/laravel laravel-todos
 cd laravel-todos
+composer require laravel/sail --dev
 ```
 
 ---
